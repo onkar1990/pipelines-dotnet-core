@@ -22,20 +22,15 @@ stages:
       vmImage: 'ubuntu-latest'
       
     steps:
-    - task: UseDotNet@2
-      inputs:
-          packageType: 'sdk'
-          version: '2.2.x'
-    - task: DotNetCoreCLI@2
-      inputs:
-          command: 'build'
-          projects: '**/*.csproj'
-          
+    
+    - script: dotnet build --configuration $(buildConfiguration)
+      displayName: 'dotnet build $(buildConfiguration)'
+
     - task: DotNetCoreCLI@2
       inputs:
        command: 'publish'
        publishWebProjects: true
-  
+
 - stage: Deploy
   jobs:
   - job: Deploy
