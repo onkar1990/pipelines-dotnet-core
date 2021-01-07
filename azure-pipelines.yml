@@ -10,16 +10,19 @@ trigger:
     - develop
 
 
-
 stages:
 - stage: Build
   jobs:
   - job: Build
-  pool:
-    vmImage: 'ubuntu-latest'
+    
     variables:
         buildConfiguration: 'Release'
+
+    pool:
+      vmImage: 'ubuntu-latest'
+      
     steps:
+     
     - script: dotnet build --configuration $(buildConfiguration)
       displayName: 'dotnet build $(buildConfiguration)'
     - task: PublishBuildArtifacts@1
@@ -31,7 +34,8 @@ stages:
 - stage: Deploy
   jobs:
   - job: Deploy
-  pool:
+  
+    pool:
        vmImage: 'ubuntu-latest'
        steps:
        - task: DownloadBuildArtifacts@0
